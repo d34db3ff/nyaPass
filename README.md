@@ -1,3 +1,5 @@
+https://github.com/user-attachments/assets/62d7898b-dcdd-4868-9e9d-ed2c1a49be00
+
 A minimalist Password Manager which avoids the complexity of syncing and storing password states.
 
 It could work without an Internet connection in case you live in North Korea.
@@ -30,6 +32,14 @@ TBD
 According to [CTAP](https://fidoalliance.org/specs/fido-v2.2-rd-20230321/fido-client-to-authenticator-protocol-v2.2-rd-20230321.html#sctn-hmac-secret-extension), the authenticator employs SHA256-HMAC internally. Although SHA256 itself is vulnerable to Hash Length Extension attack, that does not apply to SHA256-HMAC.
 
 # Known Limitations
+
+## Mandatory User Verification
+Unfortunately, currently we cannot skip user verification (thus have to enter the PIN) every time we use nyaPass to get a password from the passkey.
+This annoying restriction stems from the WebAuthn standard.
+
+> when implementing on top of hmac-secret, that PRF MUST be the one used for when user verification is performed. This overrides the UserVerificationRequirement if neccessary.
+
+
 
 ## Cross-Browser Support
 

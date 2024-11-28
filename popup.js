@@ -1,25 +1,31 @@
 
+let passwordElm = document.getElementById("password");
+let eTLDElm = document.getElementById("eTLD");
+
 chrome.runtime.sendMessage({req: "geteTLDp1"}, (response) => {
     if(response.res !== ''){
-        document.getElementById("eTLD").textContent = response.res;
+        eTLDElm.textContent = response.res;
     }else{
-        document.getElementById("password").textContent = "Cannot get eTLD for the current tab.";
-        document.getElementById("password").disabled = true;
+        passwordElm.textContent = "Cannot get eTLD for the current tab.";
+        passwordElm.disabled = true;
     }
 });
 
 
-document.getElementById("password").addEventListener("click", (e) => {
+passwordElm.addEventListener("click", (e) => {
     e.currentTarget.setAttribute("aria-busy", true);
-    if(document.getElementById("eTLD").textContent){
+    
+    if(eTLDElm.textContent){
+        let eTLD = new TextEncoder().encode(eTLDElm.textContent);
         let challenge = window.crypto.getRandomValues(new Uint8Array(16)).buffer;
         navigator.credentials.get({
             publicKey: {
                 challenge: challenge,
                 timeout: 60000,
                 rpId: "nya.Pass",
-                hints: "security-key",
-                extensions: {prf: {eval: {first: new TextEncoder().encode(document.getElementById("eTLD").textContent)}}},
+                hints: ["security-key"],
+            		userVerification: "discouraged",
+                extensions: {prf: {eval: {first: eTLD}}},
             }
         })
         .then(authenticatorRes => {
@@ -35,16 +41,16 @@ document.getElementById("password").addEventListener("click", (e) => {
             let prfRes = new Uint8Array(authenticatorRes.getClientExtensionResults().prf.results.first);
 
             // lossy base58-like output without introducing a new dependency
-            let applicationKey = btoa(String.fromCharCode(...prfRes)).replace(/[=\+oOIl]/g, '');
+            let applicationKey = btoa(String.fromCharCode(...prfRes)).replace(/[=\+\/oOIl]/g, '');
 
             applicationKey = applicationKey.slice(0, 4)
             +'-' + applicationKey.slice(4, 8)
             +'-' + applicationKey.slice(8, 12)
             +'-' + applicationKey.slice(12, 16); 
 
-            document.getElementById("password").parentElement.textContent = applicationKey;
-            document.getElementById("password").removeAttribute("aria-busy");
-            document.getElementById("password").disabled = true;
+            passwordElm.parentElement.textContent = applicationKey;
+            passwordElm.removeAttribute("aria-busy");
+            passwordElm.disabled = true;
 
 
         })
