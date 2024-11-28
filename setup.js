@@ -8,12 +8,15 @@ document.getElementById("register").addEventListener("click", () => {
                 name: "nyaPass",
                 displayName: "nyaPass"
             },
-            pubKeyCredParams: [{type: "public-key", alg: -7}],
+            pubKeyCredParams: [{type: "public-key", alg: -8}],
             timeout: 60000,
             authenticatorSelection: {
                 authenticatorAttachment: "cross-platform",
                 residentKey: "required",
+                userVerification: "discouraged"
             },
+            hints: ["security-key"],
+
             extensions: {prf: {}},
     
             challenge: challenge
@@ -28,7 +31,7 @@ document.getElementById("register").addEventListener("click", () => {
         if(oriChallenge !== rcvChallenge){
             throw new Error("Challenge mismatch.");
         }
-        console.log(authenticatorRes.getClientExtensionResults());
+        console.log(authenticatorRes.toJSON());
     })
     .catch(console.error)
     .finally(() => window.close());
