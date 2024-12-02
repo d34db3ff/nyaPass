@@ -1,5 +1,8 @@
+[Try it with chrome](https://chromewebstore.google.com/detail/nakacffbdjnnmgcdcfnedknbpdophhop/)
+
 https://github.com/user-attachments/assets/62d7898b-dcdd-4868-9e9d-ed2c1a49be00
 
+========
 A minimalist Password Manager which avoids the complexity of syncing and storing password states.
 
 It could work without an Internet connection in case you live in North Korea.
