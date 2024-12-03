@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "argon2-browser": "^1.18.0",
+    "publicsuffixlist": "^0.3.0",
+    "punycode": "^2.3.1"
+  },
+  "devDependencies": {
+    "webextension-polyfill": "^0.10.0"
+  }
+}
