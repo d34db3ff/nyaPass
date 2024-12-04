@@ -41,7 +41,7 @@ According to [CTAP](https://fidoalliance.org/specs/fido-v2.2-rd-20230321/fido-cl
 Unfortunately, currently we cannot skip user verification (thus have to enter the PIN) every time we use nyaPass to get a password from the passkey.
 This annoying restriction stems from the WebAuthn standard.
 
-> when implementing on top of hmac-secret, that PRF MUST be the one used for when user verification is performed. This overrides the UserVerificationRequirement if neccessary.
+> when implementing on top of hmac-secret, that PRF MUST be the one used for when user verification is performed. This overrides the UserVerificationRequirement if necessary.
 
 
 
